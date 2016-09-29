@@ -5,15 +5,15 @@ module.exports = {
   },
   output: {
     path: __dirname + '/src/dist',
-    filename: 'build.js',
+    filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx', '']
   },
   module: {
     loaders: [
       {
-        test: /\.jsx$/,
+        test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
