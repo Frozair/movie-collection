@@ -13,13 +13,7 @@ export default class Movie {
   search(searchValue) {
     let results = _.filter(this.movies, (movie) => {
       let filtered = _.filter(movie, (val, key) => {
-        // Handle actors
-        if(_.isArray(val))
-        {
-          val = _.join(val, ',');
-        }
-
-        return ( key == "id" ? false : _.includes(val.toLowerCase(), searchValue.toLowerCase()) );
+        return ( key == "id" || key == "rating" ? false : _.includes(val.toLowerCase(), searchValue.toLowerCase()) );
       });
 
       return filtered.length > 0;
@@ -28,16 +22,27 @@ export default class Movie {
     return results;
   }
 
-  create({ genre, title, year, actors, rating }) {
+  save({ genre, title, year, actors, rating, movieId = null }) {
+    const id = ( _.isNull(movieId) ? _.uniqueId('movie_') : movieId );
+
     var movie = {
-      id: _.uniqueId('movie_')
+      id,
+      genre: genre,
+      title: title,
+      year: year,
+      actors: actors,
+      rating: rating
     }
 
+    this.movies.push(movie);
     this.persist();
   }
 
   delete(id){
-    this.movies[id];
+    let results = _.filter(this.movies, (movie) => {
+      return movie.id != id;
+    });
+
     this.persist();
   }
 
