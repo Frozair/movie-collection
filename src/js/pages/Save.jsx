@@ -7,7 +7,7 @@ import FieldGroup from "../components/FieldGroup";
 
 import StarRatingComponent from 'react-star-rating-component';
 
-export default class New extends React.Component
+export default class Save extends React.Component
 {
   constructor(props) {
     super(props);

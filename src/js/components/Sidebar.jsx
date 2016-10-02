@@ -1,5 +1,4 @@
 import React from "react";
-import { browserHistory } from 'react-router';
 import style from "../../styles/sidebar.scss";
 import { Glyphicon, Nav, NavItem, OverlayTrigger, Tooltip } from "react-bootstrap";
 

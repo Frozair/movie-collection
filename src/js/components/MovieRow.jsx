@@ -10,7 +10,7 @@ export default class MovieRow extends React.Component
     const rating = parseInt(movie.rating);
 
     return (
-      <Link className="no-link-decoration" to={{ pathname: "new", query: { movieId: movie.id } }}>
+      <Link className="no-link-decoration" to={{ pathname: "save", query: { movieId: movie.id } }}>
         <Panel>
           <h4>{movie.title}</h4>
 
