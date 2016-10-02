@@ -8,7 +8,7 @@ export default class MovieTable extends React.Component
     if(this.props.movies.length == 0)
     {
       return (
-        <h3>No movies saved yet, please add a movie.</h3>
+        <p>No movies found. Please add a new one or search for a different movie.</p>
       );
     }
 

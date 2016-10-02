@@ -17,13 +17,21 @@ export default class App extends React.Component
 
   handleSaveMovie(movie) {
     this.movieModel.save(movie);
-    this.setState({movies: this.movieModel.getAll()});
+    this.refreshMovies();
   };
 
   handleMovieSearch(text) {
     const result = (text == '' ? this.movieModel.getAll() : this.movieModel.search(text));
+    this.setState({movies: result});
+  }
 
-    this.setState({'movies': result});
+  handleDeleteMovie(movie) {
+    this.movieModel.delete(movie.id);
+    this.refreshMovies();
+  }
+
+  refreshMovies() {
+    this.setState({movies: this.movieModel.getAll()});
   }
 
   render() {
@@ -31,7 +39,8 @@ export default class App extends React.Component
       return React.cloneElement(child, {
         movies: this.state.movies,
         handleMovieSearch: this.handleMovieSearch.bind(this),
-        handleSaveMovie: this.handleSaveMovie.bind(this)
+        handleSaveMovie: this.handleSaveMovie.bind(this),
+        handleDeleteMovie: this.handleDeleteMovie.bind(this)
       });
     });
 
@@ -41,7 +50,6 @@ export default class App extends React.Component
 
         <section className="main-content">
           <header>
-
           </header>
 
           <section>

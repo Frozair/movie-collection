@@ -12,8 +12,9 @@ export default class New extends React.Component
   constructor(props) {
     super(props);
 
+    const { query } = this.props.location;
     let movie = {}
-    if( _.isUndefined(this.props.movie) )
+    if( _.isUndefined(query.movieId) )
     {
       this.movie = {
         genre: Genres[0],
@@ -22,8 +23,15 @@ export default class New extends React.Component
         actors: '',
         rating: 0
       };
+
+      this.newMovie = true;
     } else {
-      this.movie = this.props.movie;
+      let movieIdx = _.findIndex(this.props.movies, (movie) => {
+        return movie.id == query.movieId;
+      });
+
+      this.movie = this.props.movies[movieIdx];
+      this.newMovie = false;
     }
   }
 
@@ -42,18 +50,36 @@ export default class New extends React.Component
     this.props.handleSaveMovie(this.movie);
   }
 
+  onDelete() {
+    this.props.handleDeleteMovie(this.movie);
+  }
+
   render() {
-    var genreOptions = _.map(Genres, (genre) => {
+    let genreOptions = _.map(Genres, (genre) => {
       return (<option value={genre} key={genre}>{genre}</option>);
     });
 
+    const rating = parseInt(this.movie.rating);
+    const header = (this.newMovie ? 'Create a New Movie Entry' : 'Update/Delete Movie');
+
+    let delButton;
+    if( !this.newMovie ) {
+      delButton = (
+        <Button type="submit" className="btn-danger pull-right" onClick={this.onDelete.bind(this)}>
+        Delete
+        </Button>)
+    }
+
     return (
       <div>
+        <h1>{ header }</h1>
+
         <FieldGroup
           id="title"
           type="text"
           label="Title"
           placeholder="The Matrix"
+          defaultValue={this.movie.title}
           onChange={this.setValue.bind(this)}
         />
 
@@ -63,6 +89,7 @@ export default class New extends React.Component
             id="genre"
             componentClass="select"
             placeholder="select"
+            defaultValue={this.movie.genre}
             onChange={this.setValue.bind(this)}
           >
             { genreOptions }
@@ -74,6 +101,7 @@ export default class New extends React.Component
           type="text"
           label="Actors"
           placeholder="Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss"
+          defaultValue={this.movie.actors}
           onChange={this.setValue.bind(this)}
         />
 
@@ -82,6 +110,7 @@ export default class New extends React.Component
           type="number"
           label="Year"
           placeholder="1999"
+          defaultValue={this.movie.year}
           onChange={this.setValue.bind(this)}
         />
 
@@ -91,6 +120,7 @@ export default class New extends React.Component
             className="large"
             name="starRating"
             starCount={5}
+            value={rating}
             onStarClick={this.setRating.bind(this)}
           />
         </FormGroup>
@@ -98,6 +128,8 @@ export default class New extends React.Component
         <Button type="submit" className="btn-primary" onClick={this.onSubmit.bind(this)}>
           Save
         </Button>
+
+        { delButton }
       </div>
     );
   }

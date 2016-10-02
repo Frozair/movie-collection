@@ -1,28 +1,32 @@
 import React from "react";
 import { Panel } from "react-bootstrap";
 import StarRatingComponent from 'react-star-rating-component';
+import { Link } from 'react-router';
 
 export default class MovieRow extends React.Component
 {
   render() {
-    const rating = parseInt(this.props.movie.rating);
+    const movie = this.props.movie;
+    const rating = parseInt(movie.rating);
 
     return (
-      <Panel>
-        <h4>{this.props.movie.title}</h4>
+      <Link className="no-link-decoration" to={{ pathname: "new", query: { movieId: movie.id } }}>
+        <Panel>
+          <h4>{movie.title}</h4>
 
-        <p><strong>Genre: </strong>{this.props.movie.genre}</p>
-        <p><strong>Actors: </strong>{this.props.movie.actors}</p>
+          <p><strong>Genre: </strong>{movie.genre}</p>
+          <p><strong>Actors: </strong>{movie.actors}</p>
 
-        <StarRatingComponent
-          id="rating"
-          className="large"
-          name="starRating"
-          starCount={5}
-          value={rating}
-          editing={false}
-        />
-      </Panel>
+          <StarRatingComponent
+            id="rating"
+            className="large"
+            name="starRating"
+            starCount={5}
+            value={rating}
+            editing={false}
+          />
+        </Panel>
+      </Link>
     );
   }
 };

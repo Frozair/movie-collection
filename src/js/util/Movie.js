@@ -22,24 +22,35 @@ export default class Movie {
     return results;
   }
 
-  save({ genre, title, year, actors, rating, movieId = null }) {
-    const id = ( _.isNull(movieId) ? _.uniqueId('movie_') : movieId );
-
-    var movie = {
-      id,
+  save({ genre, title, year, actors, rating, id = null }) {
+    let movie = {
       genre: genre,
       title: title,
       year: year,
       actors: actors,
       rating: rating
+    };
+
+    // Update if id is valid
+    if( !_.isNull(id) ) {
+      let movieIdx = _.findIndex(this.movies, (movie) => {
+        return movie.id == id;
+      });
+
+      movie['id'] = id;
+
+      this.movies[movieIdx] = movie;
+    }
+    else {  // Create a new movie
+      movie['id'] = _.now();
+      this.movies.push(movie);
     }
 
-    this.movies.push(movie);
     this.persist();
   }
 
   delete(id){
-    let results = _.filter(this.movies, (movie) => {
+    this.movies = _.filter(this.movies, (movie) => {
       return movie.id != id;
     });
 
