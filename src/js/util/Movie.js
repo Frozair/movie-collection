@@ -3,7 +3,9 @@ import _ from "lodash";
 export default class Movie {
   constructor() {
     const movies = localStorage.getItem('movies');
-    this.movies = ( movies == null ? [] : JSON.parse(movies) );
+    const parsedMovies = ( movies == null ? [] : JSON.parse(movies) );
+
+    this.movies = _.sortBy(parsedMovies, ['title', 'rating']);
   }
 
   getAll() {
@@ -15,11 +17,10 @@ export default class Movie {
       let filtered = _.filter(movie, (val, key) => {
         return ( key == "id" || key == "rating" ? false : _.includes(val.toLowerCase(), searchValue.toLowerCase()) );
       });
-
       return filtered.length > 0;
     });
 
-    return results;
+    return _.sortBy(results, ['title', 'rating']);
   }
 
   save({ genre, title, year, actors, rating, id = null }) {

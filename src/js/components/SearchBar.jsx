@@ -4,7 +4,6 @@ import { FormGroup, ControlLabel, FormControl, Button } from "react-bootstrap";
 export default class SearchBar extends React.Component
 {
   handleChange(event) {
-    console.log(this.props);
     this.props.onUserInput(event.target.value);
   }
 
