@@ -7,7 +7,7 @@ export default class Home extends React.Component
   render() {
     return (
       <div>
-        <h1>Movie Collection</h1>
+        <h2>Movie Collection</h2>
 
         <SearchBar onUserInput={this.props.handleMovieSearch} />
         <MovieTable movies={this.props.movies} />

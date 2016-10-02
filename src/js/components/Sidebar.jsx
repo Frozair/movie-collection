@@ -14,7 +14,7 @@ export default class Sidebar extends React.Component
             <NavItem eventKey={1} title="Home" href="/#"><Glyphicon className="large" glyph="home" /></NavItem>
           </OverlayTrigger>
           <OverlayTrigger placement="right" overlay={addTooltip}>
-            <NavItem eventKey={2} title="New Movie" href="/#new"><Glyphicon className="large" glyph="plus" /></NavItem>
+            <NavItem eventKey={2} title="New Movie" href="/#save"><Glyphicon className="large" glyph="plus" /></NavItem>
           </OverlayTrigger>
         </Nav>
       </div>

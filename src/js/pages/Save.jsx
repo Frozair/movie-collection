@@ -48,10 +48,12 @@ export default class Save extends React.Component
 
   onSubmit() {
     this.props.handleSaveMovie(this.movie);
+    location.href="/#";
   }
 
   onDelete() {
     this.props.handleDeleteMovie(this.movie);
+    location.href="/#";
   }
 
   render() {
